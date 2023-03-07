@@ -37,4 +37,21 @@ public class ExtendedMatrix {
             this.MATRIX.matrix()[secondLineNum][j] = temp;
         }
     }
+
+    /**
+     * Получение корней СЛАУ
+     * @return вектор корней уравнения СЛАУ
+     */
+    public double[] getRoots() {
+        return new double[]{};
+    }
+
+
+    /**
+     * Получение вектора невязки
+     * @return вектор невязки
+     */
+    public double[] getDiscrepancy() {
+        return new double[]{};
+    }
 }
