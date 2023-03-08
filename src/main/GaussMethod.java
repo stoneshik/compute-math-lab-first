@@ -6,6 +6,11 @@ public class GaussMethod {
         double[][] matrix = squareMatrix.matrix();
         double max;
         for (int i = 0; i < squareMatrix.matrix().length; i++) {
+            for (int j = 0; j < squareMatrix.matrix().length; j++) {
+                extendedMatrix.getIndexArr()[i][j] = j + 1;
+            }
+        }
+        for (int i = 0; i < squareMatrix.matrix().length; i++) {
             squareMatrix.setPoint(0);
             System.out.println("-------");
             System.out.println("Начало " + (i + 1) + "й итерации");
@@ -39,7 +44,7 @@ public class GaussMethod {
                     matrix[k][j] = matrix[k][j] - matrix[k][i] * matrix[i][j];
                 }
             }
-            System.out.println("Матрица после " + (i+1) + "го преобразования:");
+            System.out.println("Матрица после " + (i + 1) + "го преобразования:");
             printMatrix(extendedMatrix);
             System.out.println("-------");
         }

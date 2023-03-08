@@ -3,10 +3,13 @@ package main;
 public class ExtendedMatrix {
     private final SquareMatrix MATRIX;
     private final double[] VECTOR_FREE_VARIABLES;
+    private final int[][] indexArr;
 
     public ExtendedMatrix(SquareMatrix matrix) {
         this.MATRIX = matrix;
         this.VECTOR_FREE_VARIABLES = new double[matrix.matrix().length];
+        int n = matrix.matrix().length;
+        this.indexArr = new int[n][n + 1];
     }
 
     public SquareMatrix matrix() {
@@ -15,6 +18,10 @@ public class ExtendedMatrix {
 
     public double[] vectorFreeVariables() {
         return this.VECTOR_FREE_VARIABLES;
+    }
+
+    public int[][] getIndexArr() {
+        return indexArr;
     }
 
     public void updateVectorFreeVariables(int j, double value) {
@@ -32,6 +39,7 @@ public class ExtendedMatrix {
      * @param secondLineNum строка с максимальным элементом
      */
     public void linePermutation(int firstLineNum, int secondLineNum) {
+        SquareMatrix matrix = this.matrix();
         double temp = this.VECTOR_FREE_VARIABLES[firstLineNum];
         this.VECTOR_FREE_VARIABLES[firstLineNum] = this.VECTOR_FREE_VARIABLES[secondLineNum];
         this.VECTOR_FREE_VARIABLES[secondLineNum] = temp;
@@ -39,6 +47,10 @@ public class ExtendedMatrix {
             temp = this.MATRIX.matrix()[firstLineNum][j];
             this.MATRIX.matrix()[firstLineNum][j] = this.MATRIX.matrix()[secondLineNum][j];
             this.MATRIX.matrix()[secondLineNum][j] = temp;
+
+            int t = this.indexArr[firstLineNum][j];
+            this.indexArr[firstLineNum][j] = this.indexArr[matrix.getPoint()][j];
+            this.indexArr[matrix.getPoint()][j] = t;
         }
     }
 
@@ -50,16 +62,16 @@ public class ExtendedMatrix {
         double[][] matrix = this.MATRIX.matrix();
         int n = matrix.length;
         double[] roots = new double[n];
-
+        int[][] indexMass = this.indexArr;
         int writeOutCnt = n - 1;
         for (int i = n - 1; i >= 0; i--) {
-            if (i == n - 1){
-                roots[indexMass[writeOutCnt] - 1] = matrix[i][n] / matrix[i][n - 1];
+            if (i == n - 1) {
+                roots[indexMass[n - 1][writeOutCnt] - 1] = matrix[i][n] / matrix[i][n - 1];
             } else {
                 double root = matrix[i][n];
                 int point = 0;
                 for (int j = n - 1; j >= 0 && matrix[i][j] != 0; j--) {
-                    if(roots[indexMass[n - 1][j] - 1] != 0) {
+                    if (roots[indexMass[n - 1][j] - 1] != 0) {
                         root -= matrix[i][j] * roots[indexMass[n - 1][j] - 1];
                     }
                     point = j;

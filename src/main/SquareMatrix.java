@@ -23,10 +23,6 @@ public class SquareMatrix {
         this.point = point;
     }
 
-    public void updateValue(int i, int j, double value) {
-        this.MATRIX[i][j] = value;
-    }
-
     public double getDeterminant() {
         double det = 1;
         for(int i = 0; i < this.MATRIX.length; i++) {
