@@ -1,6 +1,7 @@
 package main;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -27,9 +28,9 @@ public class Main {
     }
 
     private static ExtendedMatrix loadMatrixFromFile(int n) {
-        BufferedReader reader;
+        BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("/input/input.txt"));
+            reader = new BufferedReader(new FileReader("./input/input.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
             return null;
@@ -47,7 +48,7 @@ public class Main {
             try {
                 for (int j = 0; j < n; j++) {
                     if (j == n - 1) {
-                        extendedMatrix.updateVectorFreeVariables(i, Double.parseDouble(row[n + 1]));
+                        extendedMatrix.updateVectorFreeVariables(i, Double.parseDouble(row[n]));
                     }
                     extendedMatrix.updateMatrix(i, j, Double.parseDouble(row[j]));
                 }
@@ -94,7 +95,6 @@ public class Main {
         if (extendedMatrix == null) {
             return;
         }
-
 
         GaussMethod.printMatrix(extendedMatrix);
         ExtendedMatrix triangleMatrix = GaussMethod.conversionToTriangularMatrix(extendedMatrix);

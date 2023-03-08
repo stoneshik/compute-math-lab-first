@@ -53,9 +53,13 @@ public class GaussMethod {
 
     public static void printMatrix(ExtendedMatrix extendedMatrix) {
         double[][] matrix = extendedMatrix.matrix().matrix();
-        for (double[] doubles : matrix) {
+        for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length + 1; j++) {
-                System.out.printf("%.2f\t", doubles[j]);
+                if (j == matrix.length) {
+                    System.out.printf("%.2f\t", extendedMatrix.vectorFreeVariables()[i]);
+                    continue;
+                }
+                System.out.printf("%.2f\t", matrix[i][j]);
             }
             System.out.println();
         }
