@@ -47,6 +47,9 @@ public class ExtendedMatrix {
      * @return вектор корней уравнения СЛАУ
      */
     public double[] getRoots() {
+        if (!this.MATRIX.isTriangleMatrix()) {
+            return null;
+        }
         double[][] matrix = this.MATRIX.matrix();
         int n = matrix.length;
         double[] roots = new double[n];

@@ -62,13 +62,22 @@ public class GaussMethod {
 
     public static void printRoots(ExtendedMatrix extendedMatrix) {
         double[] roots = extendedMatrix.getRoots();
+        if (roots == null) {
+            System.out.println("Матрица не треугольная");
+            return;
+        }
         System.out.println("Найденые корни СЛАУ:");
         for (double v : roots) {System.out.printf("%.2f\t", v);}
     }
 
     public static void printDiscrepancy(ExtendedMatrix extendedMatrix) {
         System.out.println("Вектор невязки:");
-        double[] dis = extendedMatrix.getDiscrepancy(extendedMatrix.getRoots());
+        double[] roots = extendedMatrix.getRoots();
+        if (roots == null) {
+            System.out.println("Матрица не треугольная");
+            return;
+        }
+        double[] dis = extendedMatrix.getDiscrepancy(roots);
         for (double di : dis) {System.out.printf("%.24f\t", di);}
     }
 }

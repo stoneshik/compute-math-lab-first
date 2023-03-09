@@ -41,4 +41,22 @@ public class SquareMatrix {
         }
         return max;
     }
+
+    /**
+     * Проверка является ли матрица верхнетреугольной
+     * @return является или нет
+     */
+    public boolean isTriangleMatrix() {
+        if (this.MATRIX.length <= 1) {
+            return false;
+        }
+        for (int i = 1; i < this.MATRIX.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (this.MATRIX[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
