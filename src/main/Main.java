@@ -40,10 +40,12 @@ public class Main {
         return extendedMatrix;
     }
 
-    private static ExtendedMatrix loadMatrixFromFile() {
+    private static ExtendedMatrix loadMatrixFromFile(Scanner in) {
+        System.out.println("Введите название файла");
+        String fileName = in.nextLine();
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("./input/input.txt"));
+            reader = new BufferedReader(new FileReader(String.format("./input/%s", fileName)));
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
             return null;
@@ -99,7 +101,7 @@ public class Main {
         ExtendedMatrix extendedMatrix;
         switch (type) {
             case 1 -> extendedMatrix = loadMatrixFromCmd(in);
-            case 2 -> extendedMatrix = loadMatrixFromFile();
+            case 2 -> extendedMatrix = loadMatrixFromFile(in);
             default -> extendedMatrix = null;
         }
         if (extendedMatrix == null) {

@@ -77,6 +77,6 @@ public class GaussMethod {
     public static void printDiscrepancy(ExtendedMatrix extendedMatrix) {
         System.out.println("Вектор невязки: ");
         double[] dis = extendedMatrix.getDiscrepancy(extendedMatrix.getRoots());
-        for (double di : dis) {System.out.printf("%.2f\t", di);}
+        for (double di : dis) {System.out.printf("%.24f\t", di);}
     }
 }
