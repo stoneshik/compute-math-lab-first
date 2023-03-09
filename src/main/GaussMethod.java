@@ -14,7 +14,7 @@ public class GaussMethod {
             max = squareMatrix.findMaxElementInColumn(i);
             System.out.printf("Максимальный элемент столбца: %.2f\t\n", max);
 
-            if (max == 0) {  // Система не решается, выходим
+            if (max == 0) {  // Система не решается
                 return null;
             }
 
@@ -42,7 +42,7 @@ public class GaussMethod {
             }
             System.out.printf("Матрица после %d-го преобразования:\n", i + 1);
             printMatrix(extendedMatrix);
-            System.out.println("=======");
+            System.out.print("=======\n\n");
         }
         return extendedMatrix;
     }
@@ -58,7 +58,6 @@ public class GaussMethod {
                 System.out.printf("%.2f\t", matrix[i][j]);
             }
         }
-        System.out.println();
     }
 
     public static void printRoots(ExtendedMatrix extendedMatrix) {
