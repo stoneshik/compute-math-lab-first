@@ -109,23 +109,19 @@ public class Main {
         }
         GaussMethod.printMatrix(extendedMatrix);
         ExtendedMatrix triangleMatrix = GaussMethod.conversionToTriangularMatrix(extendedMatrix);
-        if (triangleMatrix != null) {
-            System.out.println("Получена треугольная матрица:");
-            GaussMethod.printMatrix(triangleMatrix);
-            System.out.println("Определитель матрицы равен:");
-            double det = triangleMatrix.matrix().getDeterminant();
-            System.out.println(det);
+        System.out.println("Получена треугольная матрица:");
+        GaussMethod.printMatrix(triangleMatrix);
+        System.out.println("Определитель матрицы равен:");
+        double det = triangleMatrix.matrix().getDeterminant();
+        System.out.println(det);
+        System.out.println();
+        if (det != 0) {
+            GaussMethod.printRoots(triangleMatrix);
             System.out.println();
-            if (det != 0) {
-                GaussMethod.printRoots(triangleMatrix);
-                System.out.println();
-                GaussMethod.printDiscrepancy(triangleMatrix);
-                System.out.println();
-            } else {
-                System.out.println("Система имеет бесконечное множество решений");
-            }
+            GaussMethod.printDiscrepancy(triangleMatrix);
+            System.out.println();
         } else {
-            System.out.println("Ошибка в подсчете матрицы или система не имеет решений");
+            System.out.println("Система имеет бесконечное множество решений");
         }
     }
 }
