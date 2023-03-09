@@ -13,23 +13,18 @@ public class GaussMethod {
             System.out.printf("Начало %d-й итерации\n", i + 1);
             max = squareMatrix.findMaxElementInColumn(i);
             System.out.printf("Максимальный элемент столбца: %.2f\t\n", max);
-
             if (max == 0) {  // Система не решается
-                return null;
+                return extendedMatrix;
             }
-
             if (squareMatrix.getPoint() != i) {
                 System.out.printf("Переставляем строки %d и %d\n", squareMatrix.getPoint() + 1, i + 1);
             } else {
                 System.out.println("Перестановка не требуется");
             }
-
             // Ставим максимальный элемент на начало строки от 0
             extendedMatrix.linePermutation(i, squareMatrix.getPoint());
-
             System.out.println("Матрица после перестановки:");
             printMatrix(extendedMatrix);
-
             vectorFreeVariables[i] = vectorFreeVariables[i] / matrix[i][i];
             for (int k = n - 1; k >= i; k--) {
                 matrix[i][k] = matrix[i][k] / matrix[i][i];

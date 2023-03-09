@@ -25,8 +25,8 @@ public class SquareMatrix {
 
     public double getDeterminant() {
         double det = 1;
-        for(int i = 0; i < this.MATRIX.length; i++) {
-            det = det * this.MATRIX[i][i];
+        for (int i = 0; i < this.MATRIX.length; i++) {
+            det *= this.MATRIX[i][i];
         }
         return det;
     }
