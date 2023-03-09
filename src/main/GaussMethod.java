@@ -6,27 +6,20 @@ public class GaussMethod {
         double[][] matrix = squareMatrix.matrix();
         int n = squareMatrix.matrix().length;
         double max;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                extendedMatrix.getIndexArr()[i][j] = j + 1;
-            }
-        }
         double[] vectorFreeVariables = extendedMatrix.vectorFreeVariables();
         for (int i = 0; i < n; i++) {
             squareMatrix.setPoint(0);
-            System.out.println("-------");
-            System.out.println("Начало " + (i + 1) + "й итерации");
+            System.out.println("=======");
+            System.out.printf("Начало %d-й итерации\n", i + 1);
             max = squareMatrix.findMaxElementInColumn(i);
-            System.out.print("Максимальный элемент столбца: ");
-            System.out.printf("%.2f\t", max);
-            System.out.println();
+            System.out.printf("Максимальный элемент столбца: %.2f\t\n", max);
 
             if (max == 0) {  // Система не решается, выходим
                 return null;
             }
 
             if (squareMatrix.getPoint() != i) {
-                System.out.println("Переставляем строки " + (squareMatrix.getPoint() + 1) + " и " + (i + 1));
+                System.out.printf("Переставляем строки %d и %d\n", squareMatrix.getPoint() + 1, i + 1);
             } else {
                 System.out.println("Перестановка не требуется");
             }
@@ -47,9 +40,9 @@ public class GaussMethod {
                     matrix[k][j] = matrix[k][j] - matrix[k][i] * matrix[i][j];
                 }
             }
-            System.out.println("Матрица после " + (i + 1) + "го преобразования:");
+            System.out.printf("Матрица после %d-го преобразования:\n", i + 1);
             printMatrix(extendedMatrix);
-            System.out.println("-------");
+            System.out.println("=======");
         }
         return extendedMatrix;
     }
@@ -70,12 +63,12 @@ public class GaussMethod {
 
     public static void printRoots(ExtendedMatrix extendedMatrix) {
         double[] roots = extendedMatrix.getRoots();
-        System.out.println("Найдены корни СЛАУ:");
+        System.out.println("Найденые корни СЛАУ:");
         for (double v : roots) {System.out.printf("%.2f\t", v);}
     }
 
     public static void printDiscrepancy(ExtendedMatrix extendedMatrix) {
-        System.out.println("Вектор невязки: ");
+        System.out.println("Вектор невязки:");
         double[] dis = extendedMatrix.getDiscrepancy(extendedMatrix.getRoots());
         for (double di : dis) {System.out.printf("%.24f\t", di);}
     }

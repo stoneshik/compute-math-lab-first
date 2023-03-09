@@ -3,13 +3,10 @@ package main;
 public class ExtendedMatrix {
     private final SquareMatrix MATRIX;
     private final double[] VECTOR_FREE_VARIABLES;
-    private final int[][] indexArr;
 
     public ExtendedMatrix(SquareMatrix matrix) {
         this.MATRIX = matrix;
         this.VECTOR_FREE_VARIABLES = new double[matrix.matrix().length];
-        int n = matrix.matrix().length;
-        this.indexArr = new int[n][n + 1];
     }
 
     public SquareMatrix matrix() {
@@ -18,10 +15,6 @@ public class ExtendedMatrix {
 
     public double[] vectorFreeVariables() {
         return this.VECTOR_FREE_VARIABLES;
-    }
-
-    public int[][] getIndexArr() {
-        return indexArr;
     }
 
     public void updateVectorFreeVariables(int j, double value) {
@@ -39,7 +32,6 @@ public class ExtendedMatrix {
      * @param secondLineNum строка с максимальным элементом
      */
     public void linePermutation(int firstLineNum, int secondLineNum) {
-        SquareMatrix matrix = this.matrix();
         double temp = this.VECTOR_FREE_VARIABLES[firstLineNum];
         this.VECTOR_FREE_VARIABLES[firstLineNum] = this.VECTOR_FREE_VARIABLES[secondLineNum];
         this.VECTOR_FREE_VARIABLES[secondLineNum] = temp;
@@ -47,10 +39,6 @@ public class ExtendedMatrix {
             temp = this.MATRIX.matrix()[firstLineNum][j];
             this.MATRIX.matrix()[firstLineNum][j] = this.MATRIX.matrix()[secondLineNum][j];
             this.MATRIX.matrix()[secondLineNum][j] = temp;
-
-            int t = this.indexArr[firstLineNum][j];
-            this.indexArr[firstLineNum][j] = this.indexArr[matrix.getPoint()][j];
-            this.indexArr[matrix.getPoint()][j] = t;
         }
     }
 
@@ -73,19 +61,18 @@ public class ExtendedMatrix {
 
     /**
      * Получение вектора невязки
+     * @param roots массив корней СЛАУ
      * @return вектор невязки
      */
     public double[] getDiscrepancy(double[] roots) {
         double[][] matrix = this.MATRIX.matrix();
         int n = matrix.length;
         double[] dis = new double[n];
-        double r;
         for (int i = 0; i < n; i++) {
-            r = this.VECTOR_FREE_VARIABLES[i];
             for (int j = 0; j < n; j++) {
-                r -= matrix[i][j] * roots[j];
+                this.VECTOR_FREE_VARIABLES[i] -= matrix[i][j] * roots[j];
             }
-            dis[i] = r;
+            dis[i] = this.VECTOR_FREE_VARIABLES[i];
         }
         return dis;
     }
