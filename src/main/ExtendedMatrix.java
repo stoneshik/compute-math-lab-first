@@ -43,7 +43,7 @@ public class ExtendedMatrix {
         double temp = this.VECTOR_FREE_VARIABLES[firstLineNum];
         this.VECTOR_FREE_VARIABLES[firstLineNum] = this.VECTOR_FREE_VARIABLES[secondLineNum];
         this.VECTOR_FREE_VARIABLES[secondLineNum] = temp;
-        for (int j = firstLineNum; j <= this.MATRIX.matrix().length; j++) {
+        for (int j = firstLineNum; j < this.MATRIX.matrix().length; j++) {
             temp = this.MATRIX.matrix()[firstLineNum][j];
             this.MATRIX.matrix()[firstLineNum][j] = this.MATRIX.matrix()[secondLineNum][j];
             this.MATRIX.matrix()[secondLineNum][j] = temp;
@@ -66,9 +66,9 @@ public class ExtendedMatrix {
         int writeOutCnt = n - 1;
         for (int i = n - 1; i >= 0; i--) {
             if (i == n - 1) {
-                roots[indexMass[n - 1][writeOutCnt] - 1] = matrix[i][n] / matrix[i][n - 1];
+                roots[indexMass[n - 1][writeOutCnt] - 1] = this.VECTOR_FREE_VARIABLES[i] / matrix[i][n - 1];
             } else {
-                double root = matrix[i][n];
+                double root = this.VECTOR_FREE_VARIABLES[i];
                 int point = 0;
                 for (int j = n - 1; j >= 0 && matrix[i][j] != 0; j--) {
                     if (roots[indexMass[n - 1][j] - 1] != 0) {
@@ -93,7 +93,7 @@ public class ExtendedMatrix {
         int n = matrix.length;
         double[] dis = new double[n];
         for (int i = 0; i < n; i++) {
-            double r = matrix[i][n];
+            double r = this.VECTOR_FREE_VARIABLES[i];
             for (int j = 0; j < n; j++) {
                 r -= matrix[i][j] * roots[j];
             }

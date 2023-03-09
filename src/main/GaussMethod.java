@@ -4,13 +4,15 @@ public class GaussMethod {
     public static ExtendedMatrix conversionToTriangularMatrix(ExtendedMatrix extendedMatrix) {
         SquareMatrix squareMatrix = extendedMatrix.matrix();
         double[][] matrix = squareMatrix.matrix();
+        int n = squareMatrix.matrix().length;
         double max;
-        for (int i = 0; i < squareMatrix.matrix().length; i++) {
-            for (int j = 0; j < squareMatrix.matrix().length; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 extendedMatrix.getIndexArr()[i][j] = j + 1;
             }
         }
-        for (int i = 0; i < squareMatrix.matrix().length; i++) {
+        double[] vectorFreeVariables = extendedMatrix.vectorFreeVariables();
+        for (int i = 0; i < n; i++) {
             squareMatrix.setPoint(0);
             System.out.println("-------");
             System.out.println("Начало " + (i + 1) + "й итерации");
@@ -35,12 +37,14 @@ public class GaussMethod {
             System.out.println("Матрица после перестановки:");
             printMatrix(extendedMatrix);
 
-            for (int k = squareMatrix.matrix().length; k >= i; k--) {
+            vectorFreeVariables[i] = vectorFreeVariables[i] / matrix[i][i];
+            for (int k = n - 1; k >= i; k--) {
                 matrix[i][k] = matrix[i][k] / matrix[i][i];
             }
-
-            for (int k = i + 1; k < squareMatrix.matrix().length; k++) {
-                for (int j = squareMatrix.matrix().length; j >= i; j--) {
+            for (int k = i + 1; k < n; k++) {
+            //    for (int j = squareMatrix.matrix().length; j >= i; j--) {
+                vectorFreeVariables[k] = vectorFreeVariables[k] - matrix[k][i] * vectorFreeVariables[i];
+                for (int j = n - 1; j >= i; j--) {
                     matrix[k][j] = matrix[k][j] - matrix[k][i] * matrix[i][j];
                 }
             }
@@ -56,12 +60,11 @@ public class GaussMethod {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length + 1; j++) {
                 if (j == matrix.length) {
-                    System.out.printf("%.2f\t", extendedMatrix.vectorFreeVariables()[i]);
+                    System.out.printf("|\t%.2f\n", extendedMatrix.vectorFreeVariables()[i]);
                     continue;
                 }
                 System.out.printf("%.2f\t", matrix[i][j]);
             }
-            System.out.println();
         }
         System.out.println();
     }
