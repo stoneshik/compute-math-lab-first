@@ -42,7 +42,6 @@ public class GaussMethod {
                 matrix[i][k] = matrix[i][k] / matrix[i][i];
             }
             for (int k = i + 1; k < n; k++) {
-            //    for (int j = squareMatrix.matrix().length; j >= i; j--) {
                 vectorFreeVariables[k] = vectorFreeVariables[k] - matrix[k][i] * vectorFreeVariables[i];
                 for (int j = n - 1; j >= i; j--) {
                     matrix[k][j] = matrix[k][j] - matrix[k][i] * matrix[i][j];

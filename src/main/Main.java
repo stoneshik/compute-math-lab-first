@@ -1,7 +1,6 @@
 package main;
 
 import java.io.*;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -13,11 +12,9 @@ public class Main {
             row = in.nextLine().split(" ");
             try {
                 for (int j = 0; j < n; j++) {
-                    if (j == n - 1) {
-                        extendedMatrix.updateVectorFreeVariables(i, Double.parseDouble(row[n + 1]));
-                    }
                     extendedMatrix.updateMatrix(i, j, Double.parseDouble(row[j]));
                 }
+                extendedMatrix.updateVectorFreeVariables(i, Double.parseDouble(row[n]));
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка ввода! Проверьте, что дробные числа записаны через запятую");
                 continue;
@@ -28,7 +25,7 @@ public class Main {
     }
 
     private static ExtendedMatrix loadMatrixFromFile(int n) {
-        BufferedReader reader = null;
+        BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader("./input/input.txt"));
         } catch (FileNotFoundException e) {
@@ -64,27 +61,27 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("Введите: 1 - для ввода с консоли, 2 - для чтения файла");
-        int type = in.nextInt();
+        int type = Integer.parseInt(in.nextLine());
         while (type != 1 && type != 2) {
             System.out.println("Ввод не распознан, повторите ввод");
             System.out.println("Введите: 1 - для ввода с консоли, 2 - для чтения файла");
-            type = in.nextInt();
+            type = Integer.parseInt(in.nextLine());
         }
         System.out.println("Введите размерность матрицы");
-        int n = in.nextInt();
+        int n = Integer.parseInt(in.nextLine());
         while (n < 1) {
             System.out.println("Ввод не распознан, повторите ввод");
             System.out.println("Введите размерность матрицы");
-            n = in.nextInt();
+            n = Integer.parseInt(in.nextLine());
         }
         if (n == 1) {
             System.out.println("Размерность СЛАУ не может быть равна одному");
         } else if (n == 2) {
             System.out.println("Формат ввода: 'a11 a12 b1'");
-            System.out.println("Введите коффициенты через пробел:");
+            System.out.println("Коффициенты вводятся через пробел:");
         } else {
             System.out.println("Формат ввода: 'a11 ... a1" + n + " b1'");
-            System.out.println("Введите коффициенты через пробел:");
+            System.out.println("Коффициенты вводятся через пробел:");
         }
         ExtendedMatrix extendedMatrix;
         switch (type) {
