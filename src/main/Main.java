@@ -4,7 +4,23 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
-    private static ExtendedMatrix loadMatrixFromCmd(int n, Scanner in) {
+    private static ExtendedMatrix loadMatrixFromCmd(Scanner in) {
+        System.out.println("Введите размерность матрицы");
+        int n = Integer.parseInt(in.nextLine());
+        while (n < 1) {
+            System.out.println("Ввод не распознан, повторите ввод");
+            System.out.println("Введите размерность матрицы");
+            n = Integer.parseInt(in.nextLine());
+        }
+        if (n == 1) {
+            System.out.println("Размерность СЛАУ не может быть равна одному");
+        } else if (n == 2) {
+            System.out.println("Формат ввода: 'a11 a12 b1'");
+            System.out.println("Коффициенты вводятся через пробел в строку:");
+        } else {
+            System.out.println("Формат ввода: 'a11 ... a1" + n + " b1'");
+            System.out.println("Коффициенты вводятся через пробел в строку:");
+        }
         String[] row;
         int i = 0;
         ExtendedMatrix extendedMatrix = new ExtendedMatrix(new SquareMatrix(n));
@@ -16,7 +32,7 @@ public class Main {
                 }
                 extendedMatrix.updateVectorFreeVariables(i, Double.parseDouble(row[n]));
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка ввода! Проверьте, что дробные числа записаны через запятую");
+                System.out.println("Ошибка ввода! Проверьте, чтобы дробные числа были записаны через запятую");
                 continue;
             }
             i++;
@@ -24,13 +40,26 @@ public class Main {
         return extendedMatrix;
     }
 
-    private static ExtendedMatrix loadMatrixFromFile(int n) {
+    private static ExtendedMatrix loadMatrixFromFile() {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader("./input/input.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
             return null;
+        }
+        int n;
+        try {
+            n = Integer.parseInt(reader.readLine());
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Ошибка при чтении размерности СЛАУ");
+            return null;
+        }
+        System.out.printf("Введенная размерность СЛАУ: %s\n", n);
+        if (n < 1) {
+            System.out.println("Размерность СЛАУ не может быть отрицательной");
+        } else if (n == 1) {
+            System.out.println("Размерность СЛАУ не может быть равна одному");
         }
         String[] row;
         int i = 0;
@@ -50,7 +79,7 @@ public class Main {
                     extendedMatrix.updateMatrix(i, j, Double.parseDouble(row[j]));
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка ввода! Проверьте, что дробные числа записаны через запятую");
+                System.out.println("Ошибка ввода! Проверьте, чтобы дробные числа были записаны через запятую");
                 return null;
             }
             i++;
@@ -67,26 +96,10 @@ public class Main {
             System.out.println("Введите: 1 - для ввода с консоли, 2 - для чтения файла");
             type = Integer.parseInt(in.nextLine());
         }
-        System.out.println("Введите размерность матрицы");
-        int n = Integer.parseInt(in.nextLine());
-        while (n < 1) {
-            System.out.println("Ввод не распознан, повторите ввод");
-            System.out.println("Введите размерность матрицы");
-            n = Integer.parseInt(in.nextLine());
-        }
-        if (n == 1) {
-            System.out.println("Размерность СЛАУ не может быть равна одному");
-        } else if (n == 2) {
-            System.out.println("Формат ввода: 'a11 a12 b1'");
-            System.out.println("Коффициенты вводятся через пробел:");
-        } else {
-            System.out.println("Формат ввода: 'a11 ... a1" + n + " b1'");
-            System.out.println("Коффициенты вводятся через пробел:");
-        }
         ExtendedMatrix extendedMatrix;
         switch (type) {
-            case 1 -> extendedMatrix = loadMatrixFromCmd(n, in);
-            case 2 -> extendedMatrix = loadMatrixFromFile(n);
+            case 1 -> extendedMatrix = loadMatrixFromCmd(in);
+            case 2 -> extendedMatrix = loadMatrixFromFile();
             default -> extendedMatrix = null;
         }
         if (extendedMatrix == null) {

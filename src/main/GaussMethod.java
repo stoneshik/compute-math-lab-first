@@ -21,7 +21,7 @@ public class GaussMethod {
             System.out.printf("%.2f\t", max);
             System.out.println();
 
-            if (max == 0) { //Система не решается, выходим
+            if (max == 0) {  // Система не решается, выходим
                 return null;
             }
 
@@ -31,7 +31,7 @@ public class GaussMethod {
                 System.out.println("Перестановка не требуется");
             }
 
-            // ставим max элемент на начало строки от 0
+            // Ставим максимальный элемент на начало строки от 0
             extendedMatrix.linePermutation(i, squareMatrix.getPoint());
 
             System.out.println("Матрица после перестановки:");
