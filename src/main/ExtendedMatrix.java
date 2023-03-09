@@ -55,34 +55,21 @@ public class ExtendedMatrix {
     }
 
     /**
-     * Получение корней СЛАУ
+     * Получение корней СЛАУ из треугольной матрицы
      * @return вектор корней уравнения СЛАУ
      */
     public double[] getRoots() {
         double[][] matrix = this.MATRIX.matrix();
         int n = matrix.length;
         double[] roots = new double[n];
-        int[][] indexMass = this.indexArr;
-        int writeOutCnt = n - 1;
         for (int i = n - 1; i >= 0; i--) {
-            if (i == n - 1) {
-                roots[indexMass[n - 1][writeOutCnt] - 1] = this.VECTOR_FREE_VARIABLES[i] / matrix[i][n - 1];
-            } else {
-                double root = this.VECTOR_FREE_VARIABLES[i];
-                int point = 0;
-                for (int j = n - 1; j >= 0 && matrix[i][j] != 0; j--) {
-                    if (roots[indexMass[n - 1][j] - 1] != 0) {
-                        root -= matrix[i][j] * roots[indexMass[n - 1][j] - 1];
-                    }
-                    point = j;
-                }
-                roots[indexMass[n - 1][writeOutCnt] - 1] = root / matrix[i][point];
+            for (int j = n - 1; j > i; j--) {
+                roots[i] += (matrix[i][j] * roots[j]);
             }
-            writeOutCnt--;
+            roots[i] = (this.VECTOR_FREE_VARIABLES[i] - roots[i]) / matrix[i][i];
         }
         return roots;
     }
-
 
     /**
      * Получение вектора невязки
@@ -92,8 +79,9 @@ public class ExtendedMatrix {
         double[][] matrix = this.MATRIX.matrix();
         int n = matrix.length;
         double[] dis = new double[n];
+        double r;
         for (int i = 0; i < n; i++) {
-            double r = this.VECTOR_FREE_VARIABLES[i];
+            r = this.VECTOR_FREE_VARIABLES[i];
             for (int j = 0; j < n; j++) {
                 r -= matrix[i][j] * roots[j];
             }
