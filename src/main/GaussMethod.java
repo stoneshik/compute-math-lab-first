@@ -62,7 +62,9 @@ public class GaussMethod {
             return;
         }
         System.out.println("Найденые корни СЛАУ:");
-        for (double v : roots) {System.out.printf("%.2f\t", v);}
+        for (int i = 0; i < roots.length; i++) {
+            System.out.printf("x[%d]=%.18f\n", i, roots[i]);
+        }
     }
 
     public static void printDiscrepancy(ExtendedMatrix extendedMatrix) {
@@ -72,7 +74,9 @@ public class GaussMethod {
             System.out.println("Матрица не треугольная");
             return;
         }
-        double[] dis = extendedMatrix.getDiscrepancy(roots);
-        for (double di : dis) {System.out.printf("%.24f\t", di);}
+        double[] discrepancy = extendedMatrix.getDiscrepancy(roots);
+        for (int i = 0; i < discrepancy.length; i++) {
+            System.out.printf("r[%d]=%.24f\n", i, discrepancy[i]);
+        }
     }
 }
